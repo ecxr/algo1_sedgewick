@@ -15,12 +15,12 @@
 
 public class Percolation {
 
+    private static final int VIRTUAL_TOP = 0;
+    private static final int VIRTUAL_BOTTOM = 1;
     private int N;
     private boolean[] openSites;
     private WeightedQuickUnionUF uf;    // has virt top and bottom
     private WeightedQuickUnionUF ufVT;  // only virt bottom - avoid backlash.
-    private final int VIRTUAL_TOP = 0;
-    private final int VIRTUAL_BOTTOM = 1;
 
     /* create N-by-N grid, with all sites blocked */
     public Percolation(int N) {

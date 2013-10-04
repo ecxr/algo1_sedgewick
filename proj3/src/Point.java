@@ -15,7 +15,7 @@ import java.util.Comparator;
 public class Point implements Comparable<Point> {
 
     // compare points by slope
-    public final Comparator<Point> SLOPE_ORDER;       // YOUR DEFINITION HERE
+    public final Comparator<Point> SLOPE_ORDER = new SlopeOrder();
 
     private final int x;                              // x coordinate
     private final int y;                              // y coordinate
@@ -41,19 +41,45 @@ public class Point implements Comparable<Point> {
 
     // slope between this point and that point
     public double slopeTo(Point that) {
-        /* YOUR CODE HERE */
+        if (this.x == that.x) {
+            if (this.y == that.y)  return Double.NEGATIVE_INFINITY;
+            else                   return Double.POSITIVE_INFINITY;
+        }
+        else if (this.y == that.y) return 0.0;
+        else {
+                                   double dy = that.y - this.y;
+                                   double dx = that.x - this.x;
+                                   double slope = dy / dx;
+                                   return slope;
+        }
     }
 
     // is this point lexicographically smaller than that one?
     // comparing y-coordinates and breaking ties by x-coordinates
     public int compareTo(Point that) {
-        /* YOUR CODE HERE */
+        if (this.y == that.y) {
+            if      (this.x == that.x) return 0;
+            else if (this.x < that.x)  return -1;
+            else                       return 1;
+        }
+        else if     (this.y < that.y) return -1;
+        else                           return 1;
     }
 
     // return string representation of this point
     public String toString() {
         /* DO NOT MODIFY */
         return "(" + x + ", " + y + ")";
+    }
+
+    private class SlopeOrder implements Comparator<Point>
+    {
+        public int compare(Point p1, Point p2) {
+
+            if      (slopeTo(p1) < slopeTo(p2)) return -1;
+            else if (slopeTo(p1) > slopeTo(p2)) return +1;
+            else                                return 0;
+        }
     }
 
     // unit test
